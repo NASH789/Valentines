@@ -6,16 +6,16 @@
   <title>💘 Valentine?</title>
 
   <!-- Social preview when pasted in iMessage/WhatsApp/etc (email varies) -->
-  <meta property="og:title" content="Will you be my Valentine? 💚" />
-  <meta property="og:description" content="I have a very important question for you…" />
+  <meta property="og:title" content="Will you be my Valentine? 💘" />
+  <meta property="og:description" content="Important question inside 👀" />
   <!-- Replace with a real absolute URL once you know your final GitHub Pages link -->
-  <!-- <meta property="og:image" content="https://nash789.github.io/Valentines/images/us3.png" /> -->
+  <!-- <meta property="og:image" content="https://YOURUSERNAME.github.io/valentines/images/preview.jpg" /> -->
   <meta property="og:type" content="website" />
 
   <style>
     :root {
-      --bg1: #6fbf8a;
-      --bg2: #3f8f6b;
+      --bg1: #ff7eb3;
+      --bg2: #ff758c;
       --card: rgba(255,255,255,.20);
       --card2: rgba(255,255,255,.12);
       --text: #fff;
@@ -68,7 +68,7 @@
 
     .photo {
       width: 100%;
-      aspect-ratio: 16 / 7;
+      aspect-ratio: 16 / 10;
       object-fit: cover;
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.30);
@@ -172,12 +172,12 @@
     <div class="photoWrap" id="photoWrap"></div>
 
     <h1>Will you be my Valentine? 💘</h1>
-    <p class="sub">Theres only one correct answer</p>
+    <p class="sub">Choose wisely 😌</p>
 
     <div class="controls" id="controls">
       <div class="btnRow">
         <button id="yesBtn">Yes 💖</button>
-        <button id="noBtn">No 😈</button>
+        <button id="noBtn">No 🙃</button>
       </div>
       <div class="tiny">(Try clicking “No”...)</div>
     </div>
@@ -187,7 +187,7 @@
     <div class="modal">
       <h2>YAYYYY!!! 🎉💞</h2>
       <p>You just made me the happiest person 🥰</p>
-      <p>See you in April for our late valentine's day date! 💘</p>
+      <p>See you on Valentine’s 💘</p>
     </div>
   </section>
 
@@ -249,7 +249,7 @@
     noBtn.addEventListener("mouseenter", moveNoButton);
     noBtn.addEventListener("mouseover", moveNoButton);
 
-    // Optional: dodge when cursor gets close (extra mean)
+    // Optional: dodge when cursor gets close (extra mean 😈)
     document.addEventListener("mousemove", (e) => {
       const btn = noBtn.getBoundingClientRect();
       const dx = e.clientX - (btn.left + btn.width / 2);
