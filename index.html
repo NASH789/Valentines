@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>💘 Valentine?</title>
+
+  <!-- Social preview when pasted in iMessage/WhatsApp/etc (email varies) -->
+  <meta property="og:title" content="Will you be my Valentine? 💘" />
+  <meta property="og:description" content="Important question inside 👀" />
+  <!-- Replace with a real absolute URL once you know your final GitHub Pages link -->
+  <!-- <meta property="og:image" content="https://YOURUSERNAME.github.io/valentines/images/preview.jpg" /> -->
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root {
+      --bg1: #ff7eb3;
+      --bg2: #ff758c;
+      --card: rgba(255,255,255,.20);
+      --card2: rgba(255,255,255,.12);
+      --text: #fff;
+      --shadow: 0 20px 60px rgba(0,0,0,.25);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(1200px 800px at 20% 10%, #ffd1e6 0%, transparent 50%),
+                  radial-gradient(900px 600px at 90% 30%, #ffe3f0 0%, transparent 45%),
+                  linear-gradient(135deg, var(--bg1), var(--bg2));
+      overflow: hidden;
+    }
+
+    .card {
+      width: min(680px, 92vw);
+      background: linear-gradient(180deg, var(--card), var(--card2));
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 22px 18px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      font-size: clamp(28px, 3.8vw, 44px);
+      margin: 10px 0 14px;
+      letter-spacing: -0.5px;
+    }
+
+    .sub {
+      opacity: .95;
+      margin: 0 0 18px;
+      font-size: 16px;
+    }
+
+    .photoWrap {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 10px 0 16px;
+    }
+
+    .photo {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.30);
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+    }
+
+    .controls {
+      position: relative;
+      height: 92px;
+      margin-top: 12px;
+      display: grid;
+      place-items: center;
+    }
+
+    .btnRow {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-size: 18px;
+      font-weight: 700;
+      transition: transform .08s ease, filter .12s ease;
+      user-select: none;
+    }
+    button:active { transform: scale(.98); }
+
+    #yesBtn {
+      background: #ffffff;
+      color: #ff2d6d;
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+    #yesBtn:hover { filter: brightness(1.05); }
+
+    #noBtn {
+      background: rgba(0,0,0,.20);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.25);
+      box-shadow: 0 10px 24px rgba(0,0,0,.12);
+      position: relative;
+    }
+
+    /* Celebration overlay */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: radial-gradient(900px 600px at 50% 20%, rgba(255,255,255,.25), transparent 55%),
+                  rgba(0,0,0,.12);
+      backdrop-filter: blur(6px);
+      z-index: 50;
+      padding: 20px;
+    }
+    .overlay.show { display: grid; }
+
+    .modal {
+      width: min(720px, 92vw);
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.30);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 24px 18px;
+      text-align: center;
+    }
+    .modal h2 {
+      margin: 4px 0 10px;
+      font-size: clamp(28px, 4vw, 46px);
+    }
+    .modal p {
+      margin: 0 0 16px;
+      font-size: 18px;
+      opacity: .95;
+    }
+
+    canvas#confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 60;
+    }
+
+    .tiny {
+      margin-top: 10px;
+      opacity: .85;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="confetti"></canvas>
+
+  <main class="card" id="mainCard">
+    <div class="photoWrap" id="photoWrap"></div>
+
+    <h1>Will you be my Valentine? 💘</h1>
+    <p class="sub">Choose wisely 😌</p>
+
+    <div class="controls" id="controls">
+      <div class="btnRow">
+        <button id="yesBtn">Yes 💖</button>
+        <button id="noBtn">No 🙃</button>
+      </div>
+      <div class="tiny">(Try clicking “No”...)</div>
+    </div>
+  </main>
+
+  <section class="overlay" id="overlay" aria-hidden="true">
+    <div class="modal">
+      <h2>YAYYYY!!! 🎉💞</h2>
+      <p>You just made me the happiest person 🥰</p>
+      <p>See you on Valentine’s 💘</p>
+    </div>
+  </section>
+
+  <script>
+    // 1) Add your photos here (either absolute URLs OR files in your repo like "images/us1.jpg")
+    const photos = [
+      // Example if you upload to repo: "images/us1.jpg",
+      // "images/us2.jpg"
+    ];
+
+    // Render photos (if none provided, show a cute placeholder gradient block)
+    const photoWrap = document.getElementById("photoWrap");
+    if (photos.length) {
+      photos.forEach(src => {
+        const img = document.createElement("img");
+        img.className = "photo";
+        img.src = src;
+        img.alt = "Us";
+        photoWrap.appendChild(img);
+      });
+    } else {
+      const placeholder = document.createElement("div");
+      placeholder.className = "photo";
+      placeholder.style.background =
+        "radial-gradient(700px 400px at 20% 20%, rgba(255,255,255,.40), transparent 55%)," +
+        "linear-gradient(135deg, rgba(255,255,255,.25), rgba(0,0,0,.05))";
+      placeholder.style.display = "grid";
+      placeholder.style.placeItems = "center";
+      placeholder.innerHTML = "<div style='font-weight:800;font-size:20px;opacity:.95'>Add your photos in the code 💞</div>";
+      photoWrap.appendChild(placeholder);
+    }
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const controls = document.getElementById("controls");
+    const overlay = document.getElementById("overlay");
+
+    // 2) "No" button dodges the cursor
+    // Moves when the mouse gets near it OR on hover (helps on touchpads)
+    function moveNoButton() {
+      const bounds = controls.getBoundingClientRect();
+      const btn = noBtn.getBoundingClientRect();
+
+      const padding = 8;
+      const maxX = bounds.width - btn.width - padding;
+      const maxY = bounds.height - btn.height - padding;
+
+      // random position inside controls area
+      const x = Math.max(padding, Math.min(maxX, Math.random() * maxX));
+      const y = Math.max(padding, Math.min(maxY, Math.random() * maxY));
+
+      // position relative to controls
+      noBtn.style.position = "absolute";
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    // Start with normal flow; after first dodge, we pin it absolute.
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("mouseover", moveNoButton);
+
+    // Optional: dodge when cursor gets close (extra mean 😈)
+    document.addEventListener("mousemove", (e) => {
+      const btn = noBtn.getBoundingClientRect();
+      const dx = e.clientX - (btn.left + btn.width / 2);
+      const dy = e.clientY - (btn.top + btn.height / 2);
+      const dist = Math.hypot(dx, dy);
+
+      if (dist < 90) moveNoButton();
+    });
+
+    // 3) "Yes" triggers celebration screen
+    yesBtn.addEventListener("click", () => {
+      overlay.classList.add("show");
+      overlay.setAttribute("aria-hidden", "false");
+      launchConfetti(250);
+    });
+
+    // Confetti (tiny canvas particle system)
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    let confetti = [];
+    let animId = null;
+
+    function resize() {
+      canvas.width = window.innerWidth * devicePixelRatio;
+      canvas.height = window.innerHeight * devicePixelRatio;
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    function launchConfetti(count) {
+      confetti = Array.from({ length: count }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: -20 - Math.random() * 200,
+        r: 4 + Math.random() * 6,
+        vx: -2 + Math.random() * 4,
+        vy: 2 + Math.random() * 5,
+        rot: Math.random() * Math.PI,
+        vr: -0.2 + Math.random() * 0.4,
+        life: 220 + Math.random() * 120
+      }));
+
+      if (animId) cancelAnimationFrame(animId);
+      tick();
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      confetti.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.03;     // gravity
+        p.rot += p.vr;
+        p.life -= 1;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        // random-ish pastel colors without hardcoding a palette
+        const hue = (p.x + p.y) % 360;
+        ctx.fillStyle = `hsl(${hue}, 90%, 70%)`;
+        ctx.fillRect(-p.r, -p.r, p.r * 1.8, p.r * 1.2);
+        ctx.restore();
+      });
+
+      confetti = confetti.filter(p => p.life > 0 && p.y < window.innerHeight + 40);
+      if (confetti.length > 0) {
+        animId = requestAnimationFrame(tick);
+      }
+    }
+  </script>
+</body>
+</html>
